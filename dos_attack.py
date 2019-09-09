@@ -1,14 +1,23 @@
 from scapy.all import *
 
-packet = IP(dst='127.0.0.1', src='8.8.8.8', id=1111, ttl=99)/TCP(sport=RandShort(), dport=12000, seq=12345, ack=100)
-ls(packet)
+packet = IP(dst='127.0.0.1', id=1111, ttl=99)/TCP(srcport=RandShort(), dstport=12000, seq=12345, ack=100)
 
-ans, unans = srloop(packet, inter=0.3, retry=2, timeout=4)
+i=1
 
-ans.summary()
+while 1:
+    send(packet, inter=.001)
+    print(f'packet sent:  {i}')
+    i += 1
 
-unans.summary()
 
-rsv = sr(packet)
+# ls(packet)
+#
+# ans, unans = srloop(packet, inter=0.3, retry=2, timeout=4)
+#
+# ans.summary()
+#
+# unans.summary()
+
+# rsv = sr(packet)
 
 # print(packet.show())
