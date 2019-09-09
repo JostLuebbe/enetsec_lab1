@@ -3,7 +3,7 @@ from socket import *
 
 
 def main():
-    server_ip = '127.0.0.1'
+    server_ip = '127.0.0.2'
     server_port = 12000
     client_socket = socket(AF_INET, SOCK_STREAM)
     client_socket.connect((server_ip, server_port))

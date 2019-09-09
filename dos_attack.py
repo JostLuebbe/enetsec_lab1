@@ -2,6 +2,8 @@ from scapy.all import *
 
 packet = IP(dst='127.0.0.1', id=1111, ttl=99)/TCP(sport=RandShort(), dport=80, seq=12345, ack=100)
 
+conf.L3socket=L3RawSocket
+
 i=1
 
 while 1:
