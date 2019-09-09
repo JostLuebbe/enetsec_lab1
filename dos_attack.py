@@ -1,6 +1,6 @@
 from scapy.all import *
 
-packet = IP(dst='127.0.0.2', id=1111, ttl=99)/TCP(sport=RandShort(), dport=12000, seq=12345, ack=100, flags='S')
+packet = IP(dst='127.0.0.2', id=1111, ttl=99)/TCP(sport=RandShort(), dport=12000, flags='S')
 
 conf.L3socket = L3RawSocket
 
