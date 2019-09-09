@@ -3,7 +3,7 @@ from socket import *
 
 
 def main():
-    server_port = 8080
+    server_port = 5555
     server_socket = socket(AF_INET, SOCK_STREAM)
     server_socket.bind(('127.0.0.1', server_port))
     server_socket.listen(1)

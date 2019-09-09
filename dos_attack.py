@@ -3,7 +3,7 @@ from scapy.all import *
 conf.iface="lo0"
 conf.L3socket = L3RawSocket
 
-packet = IP(dst='127.0.0.1')/TCP(sport=RandShort(), dport=8080, flags='S')/"hello world"
+packet = IP(dst='127.0.0.1')/TCP(sport=RandShort(), dport=5555, flags='S')/"hello world"
 
 
 # i = 1

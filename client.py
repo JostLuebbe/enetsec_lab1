@@ -4,7 +4,7 @@ from socket import *
 
 def main():
     server_ip = '127.0.0.1'
-    server_port = 8080
+    server_port = 5555
     client_socket = socket(AF_INET, SOCK_STREAM)
     client_socket.connect((server_ip, server_port))
     user_input = input("Input lowercase sentence: ")
