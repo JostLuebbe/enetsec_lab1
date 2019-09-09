@@ -1,8 +1,10 @@
 from scapy.all import *
 
+conf.iface="lo0"
+conf.L3socket = L3RawSocket
+
 packet = IP(dst='127.0.0.2', id=1111, ttl=99)/TCP(sport=RandShort(), dport=12000, flags='S')
 
-conf.L3socket = L3RawSocket
 
 # i = 1
 #
