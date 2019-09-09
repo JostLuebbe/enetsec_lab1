@@ -6,7 +6,7 @@ i=1
 
 while 1:
     send(packet, inter=.001)
-    print(f'packet sent:  {i}')
+    print(f'packet sent: {str(i)}')
     i += 1
 
 
