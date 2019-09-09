@@ -2,12 +2,12 @@ from scapy.all import *
 
 packet = IP(dst='127.0.0.2', id=1111, ttl=99)/TCP(sport=RandShort(), dport=80, seq=12345, ack=100, flags='S')
 
-conf.L3socket=L3RawSocket
+conf.L3socket = L3RawSocket
 
-i=1
+i = 1
 
 while 1:
-    send(packet, inter=.001)
+    rsv = sr(packet, inter=.001)
     print('packet sent: ', i)
     i += 1
 
