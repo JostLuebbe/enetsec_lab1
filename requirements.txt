@@ -1,0 +1,4 @@
+dnspython==1.16.0
+ipwhois==1.1.0
+netaddr==0.7.19
+scapy==2.4.3
