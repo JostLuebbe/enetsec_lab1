@@ -6,7 +6,7 @@ from urllib.error import HTTPError
 import socket
 
 
-def main():
+def lookup_ips():
     input_file = Path.cwd() / 'resources' / 'results.txt'
 
     with open(input_file, 'r') as f:
@@ -16,28 +16,17 @@ def main():
 
     for i, ip in enumerate(ips):
         try:
-            ip_info = ipwhois.IPWhois(ip).lookup_whois()
-            if ip_info.get('nets'):
-                first_net = ip_info.get('nets')[0]
+            ip_info = ipwhois.IPWhois(ip).lookup_rdap()
 
-                if not first_net.get('name') in entities:
-                    entities[first_net.get('name')] = {
-                        'found_ips': [],
-                        'subnets': []
-                    }
-
-                e = entities.get(first_net.get('name'))
-                e['found_ips'].append(ip)
-
-                for net in ip_info.get('nets'):
-                    if not net.get('cidr') in e.get('subnets'):
-                        e['subnets'].append(net.get('cidr'))
+            if 'asn_description' in ip_info:
+                entities[ip_info.get('asn_description')] = ip_info
             else:
-                print(f'could not find whois info for {ip}')
-        except Exception as e:
-            print(f'failed to lookup this IP: {ip} because of this {e}.')
+                entities[ip] = ip_info
 
-        print(f'finished lookup for ip {i}/{len(ips)}')
+        except Exception as e:
+            print(f'Unable to lookup IP {ip} because of error: {e}')
+
+        print(f'finished ip {i}/{len(ips)}')
 
     output_file = Path.cwd() / 'resources' / 'output.json'
 
@@ -45,7 +34,8 @@ def main():
         json.dump(entities, f)
 
 
-    # pprint(entities)
+def main():
+    lookup_ips()
 
 
 if __name__ == '__main__':
