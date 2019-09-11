@@ -9,7 +9,7 @@ import socket
 def main():
     input_file = Path.cwd() / 'resources' / 'results.txt'
 
-    with open(input_file) as f:
+    with open(input_file, 'r') as f:
         ips = f.read().split('\n')
 
     entities = dict()
@@ -40,7 +40,7 @@ def main():
 
     output_file = Path.cwd() / 'resources' / 'output.json'
 
-    with open(output_file) as f:
+    with open(output_file, 'w') as f:
         json.dump(entities, f)
 
 

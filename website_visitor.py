@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from pathlib import Path
 
+from tbselenium.tbdriver import TorBrowserDriver
+
+
 site_urls = [
     'https://en.wikipedia.org/wiki/Cat',
     'https://en.wikipedia.org/wiki/Dog',
@@ -16,15 +19,26 @@ site_urls = [
 ]
 
 
-def main():
+def regular_browser():
     geckodriver_path = Path('/Users/jostluebbe/geckodriver')
 
     options = Options()
-    options.headless = True
+    # options.headless = True
     driver = webdriver.Firefox(options=options, executable_path=geckodriver_path)
 
     for url in site_urls:
         driver.get(url)
+
+
+def tor_browser():
+    with TorBrowserDriver('/Applications') as driver:
+        for url in site_urls:
+            driver.get(url)
+
+
+def main():
+    # regular_browser()
+    tor_browser()
 
 
 if __name__ == '__main__':
