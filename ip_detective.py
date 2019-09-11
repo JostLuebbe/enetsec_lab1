@@ -23,14 +23,15 @@ def main():
                 if not first_net.get('name') in entities:
                     entities[first_net.get('name')] = {
                         'found_ips': [],
-                        'subnets': set()
+                        'subnets': []
                     }
 
                 e = entities.get(first_net.get('name'))
                 e['found_ips'].append(ip)
 
                 for net in ip_info.get('nets'):
-                    e['subnets'].add(net.get('cidr'))
+                    if not net.get('cidr') in e.get('subnets'):
+                        e['subnets'].append(net.get('cidr'))
             else:
                 print(f'could not find whois info for {ip}')
         except Exception as e:
