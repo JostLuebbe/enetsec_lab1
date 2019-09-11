@@ -3,6 +3,7 @@ from pprint import pprint
 from pathlib import Path
 import json
 from urllib.error import HTTPError
+import socket
 
 
 def main():
@@ -32,7 +33,7 @@ def main():
                     e['subnets'].add(net.get('cidr'))
             else:
                 print(f'could not find whois info for {ip}')
-        except HTTPError:
+        except HTTPError or socket.timeout:
             print(f'failed to lookup this IP: {ip}')
 
         print(f'finished lookup for ip {i}/{len(ips)}')
