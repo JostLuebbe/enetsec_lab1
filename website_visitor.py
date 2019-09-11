@@ -20,7 +20,7 @@ site_urls = [
 
 
 def regular_browser():
-    geckodriver_path = Path('/Users/jostluebbe/geckodriver')
+    geckodriver_path = Path('/home/class/Documents/geckodriver')
 
     options = Options()
     # options.headless = True
@@ -31,7 +31,7 @@ def regular_browser():
 
 
 def tor_browser():
-    with TorBrowserDriver('/Applications') as driver:
+    with TorBrowserDriver('/home/class/Documents/tor-browser_en-US') as driver:
         for url in site_urls:
             driver.get(url)
 
