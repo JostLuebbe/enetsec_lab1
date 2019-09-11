@@ -33,8 +33,8 @@ def main():
                     e['subnets'].add(net.get('cidr'))
             else:
                 print(f'could not find whois info for {ip}')
-        except HTTPError or socket.timeout:
-            print(f'failed to lookup this IP: {ip}')
+        except Exception as e:
+            print(f'failed to lookup this IP: {ip} because of this {e}.')
 
         print(f'finished lookup for ip {i}/{len(ips)}')
 
