@@ -34,7 +34,7 @@ def tor_browser():
     with TorBrowserDriver('/home/class/Downloads/tor-browser_en-US', tbb_logfile_path='./tor_logs/') as driver:
         print(driver.load_url('https://www.asu.edu/'))
         # for url in site_urls:
-            #    driver.get(url)
+        #     driver.get(url)
 
 
 def main():

@@ -14,7 +14,7 @@ def lookup_ips():
 
     entities = dict()
 
-    for i, ip in enumerate(ips):
+    for i, ip in enumerate(ips[0:6000]):
         try:
             ip_info = ipwhois.IPWhois(ip).lookup_rdap()
 
@@ -26,7 +26,7 @@ def lookup_ips():
         except Exception as e:
             print(f'Unable to lookup IP {ip} because of error: {e}')
 
-        print(f'finished ip {i}/{len(ips)}')
+        print(f'finished ip {i}/6000')
 
     output_file = Path.cwd() / 'resources' / 'output.json'
 
