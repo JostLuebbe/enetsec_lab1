@@ -32,8 +32,9 @@ def regular_browser():
 
 def tor_browser():
     with TorBrowserDriver('/home/class/Downloads/tor-browser_en-US') as driver:
-        for url in site_urls:
-            driver.get(url)
+        print(driver.load_url('https://www.asu.edu/'))
+	# for url in site_urls:
+        #    driver.get(url)
 
 
 def main():
