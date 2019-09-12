@@ -5,46 +5,84 @@ import json
 import queue
 import logging
 from threading import Thread
+import time
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.ERROR)
 
 
 def multithread_approach():
     q = queue.Queue()
+    logger.debug(f'Created queue {q}')
 
     input_file = Path.cwd() / 'resources' / 'results.txt'
 
     with open(input_file, 'r') as f:
         ips = f.read().split('\n')
 
+    logger.debug(f'read in list of ips of length {len(ips)}')
+
     for ip in ips:
         q.put(ip)
 
-    def lookup(q, entitie):
+    def lookup(q, e):
         while not q.empty():
             ip_in = q.get()
             try:
                 ip_info = ipwhois.IPWhois(ip_in).lookup_rdap()
 
                 if 'asn_description' in ip_info:
-                    entitie[ip_info.get('asn_description')] = ip_info
+                    e[ip_info.get('asn_description')] = ip_info
                 else:
-                    entitie[ip_in] = ip_info
-            except Exception as e:
-                logging.debug(f'Unable to lookup IP {ip} because of error: {e}')
+                    e[ip_in] = ip_info
+            except Exception as exception:
+                logger.error(f'Unable to lookup IP {ip} because of error: {exception}')
 
+            logger.debug(f'finished ip {ip_in}')
             q.task_done()
         return True
 
     entities = dict()
 
     for i in range(10):
-        logging.debug(f'Starting thread {i}')
+        logger.debug(f'Starting thread {i}')
         worker = Thread(target=lookup, args=(q, entities))
         worker.setDaemon(True)
         worker.start()
+        logger.debug(f'started thread {i}')
 
     q.join()
 
-    logging.info('all ips completed')
+    logger.debug('all ips completed')
+
+    output_file = Path.cwd() / 'resources' / 'output.json'
+
+    with open(output_file, 'w') as f:
+        json.dump(entities, f, indent=4)
+
+
+def lookup_ips():
+    input_file = Path.cwd() / 'resources' / 'results.txt'
+
+    with open(input_file, 'r') as f:
+        ips = f.read().split('\n')
+
+    entities = dict()
+
+    for i, ip in enumerate(ips[0:100]):
+        try:
+            ip_info = ipwhois.IPWhois(ip).lookup_rdap()
+
+            if 'asn_description' in ip_info:
+                entities[ip_info.get('asn_description')] = ip_info
+            else:
+                entities[ip] = ip_info
+
+        except Exception as e:
+            logger.error(f'Unable to lookup IP {ip} because of error: {e}')
+
+        logger.info(f'finished ip {i}/6000')
 
     output_file = Path.cwd() / 'resources' / 'output.json'
 
@@ -52,30 +90,13 @@ def multithread_approach():
         json.dump(entities, f)
 
 
-# def lookup_ips():
-#     for i, ip in enumerate(ips[0:6000]):
-#         try:
-#             ip_info = ipwhois.IPWhois(ip).lookup_rdap()
-#
-#             if 'asn_description' in ip_info:
-#                 entities[ip_info.get('asn_description')] = ip_info
-#             else:
-#                 entities[ip] = ip_info
-#
-#         except Exception as e:
-#             print(f'Unable to lookup IP {ip} because of error: {e}')
-#
-#         print(f'finished ip {i}/6000')
-#
-#     output_file = Path.cwd() / 'resources' / 'output.json'
-#
-#     with open(output_file, 'w') as f:
-#         json.dump(entities, f)
-
-
 def main():
+    # start_time = time.time()
     # lookup_ips()
+    # print(time.time() - start_time)
+    start_time = time.time()
     multithread_approach()
+    print(time.time() - start_time)
 
 if __name__ == '__main__':
     main()
