@@ -22,11 +22,11 @@ site_urls = [
 
 
 def regular_browser():
-    geckodriver_path = Path('/home/class/Downloads/geckodriver')
+    geckodriver_path = Path('/home/class/Downloads/')
 
     options = Options()
     # options.headless = True
-    driver = webdriver.Firefox(options=options, executable_path=geckodriver_path)
+    driver = webdriver.Firefox(geckodriver_path, options=options)
 
     for url in site_urls:
         driver.get(url)
@@ -40,11 +40,6 @@ def tor_browser():
 
     for url in site_urls:
         driver.get(url)
-
-    # with TorBrowserDriver('/home/class/Downloads/tor-browser_en-US', tbb_logfile_path='./tor_logs/') as driver:
-    #     print(driver.load_url('https://www.asu.edu/'))
-        # for url in site_urls:
-        #     driver.get(url)
 
 
 def main():
