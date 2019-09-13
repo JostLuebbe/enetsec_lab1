@@ -39,6 +39,7 @@ def multithread_approach():
                 else:
                     e[ip_in] = ip_info
             except Exception as exception:
+
                 if 'Rate' in exception:
                     sleep(10)
                 logger.error(f'Unable to lookup IP {ip} because of error: {exception}')
