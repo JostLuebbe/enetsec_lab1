@@ -29,7 +29,7 @@ def multithread_approach():
 
     def lookup(q, e):
         while not q.empty():
-            sleep(1)
+            # sleep(1)
             ip_in = q.get()
             try:
                 ip_info = ipwhois.IPWhois(ip_in).lookup_rdap()
@@ -39,6 +39,8 @@ def multithread_approach():
                 else:
                     e[ip_in] = ip_info
             except Exception as exception:
+                if 'Rate' in exception:
+                    sleep(10)
                 logger.error(f'Unable to lookup IP {ip} because of error: {exception}')
 
             logger.debug(f'finished ip {ip_in}')
