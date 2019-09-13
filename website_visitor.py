@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from pathlib import Path
 
 from tbselenium.tbdriver import TorBrowserDriver
@@ -31,8 +32,16 @@ def regular_browser():
 
 
 def tor_browser():
-    with TorBrowserDriver('/home/class/Downloads/tor-browser_en-US', tbb_logfile_path='./tor_logs/') as driver:
-        print(driver.load_url('https://www.asu.edu/'))
+    binary_path = '/home/class/Downloads/tor-browser_en-US/Browser/firefox'
+
+    firefox_binary = FirefoxBinary(binary_path)
+    driver = webdriver.Firefox(firefox_binary=firefox_binary)
+
+    for url in site_urls:
+        driver.get(url)
+
+    # with TorBrowserDriver('/home/class/Downloads/tor-browser_en-US', tbb_logfile_path='./tor_logs/') as driver:
+    #     print(driver.load_url('https://www.asu.edu/'))
         # for url in site_urls:
         #     driver.get(url)
 
