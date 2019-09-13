@@ -6,6 +6,7 @@ import queue
 import logging
 from threading import Thread
 import time
+from time import sleep
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
@@ -28,6 +29,7 @@ def multithread_approach():
 
     def lookup(q, e):
         while not q.empty():
+            sleep(1)
             ip_in = q.get()
             try:
                 ip_info = ipwhois.IPWhois(ip_in).lookup_rdap()
