@@ -31,6 +31,8 @@ def regular_browser():
     for url in site_urls:
         driver.get(url)
 
+    driver.close()
+
 
 def tor_browser():
     binary_path = '/home/class/Downloads/tor-browser_en-US/Browser/firefox'
@@ -40,6 +42,8 @@ def tor_browser():
 
     for url in site_urls:
         driver.get(url)
+
+    driver.close()
 
 
 def main():
