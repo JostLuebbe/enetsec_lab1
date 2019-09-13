@@ -97,11 +97,11 @@ def lookup_ips():
 
 def main():
     # start_time = time.time()
-    # lookup_ips()
+    lookup_ips()
     # print(time.time() - start_time)
-    start_time = time.time()
-    multithread_approach()
-    print(time.time() - start_time)
+    # start_time = time.time()
+    # multithread_approach()
+    # print(time.time() - start_time)
 
 if __name__ == '__main__':
     main()
