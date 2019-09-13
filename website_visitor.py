@@ -22,11 +22,11 @@ site_urls = [
 
 
 def regular_browser():
-    geckodriver_path = Path('/home/class/Downloads/')
+    geckodriver_path = Path('/home/class/Downloads/geckodriver')
 
     options = Options()
     # options.headless = True
-    driver = webdriver.Firefox(geckodriver_path, options=options)
+    driver = webdriver.Firefox(options=options, executable_path=geckodriver_path)
 
     for url in site_urls:
         driver.get(url)
