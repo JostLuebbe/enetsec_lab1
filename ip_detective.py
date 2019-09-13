@@ -24,7 +24,7 @@ def multithread_approach():
 
     logger.debug(f'read in list of ips of length {len(ips)}')
 
-    for ip in ips:
+    for ip in ips[0:3000]:
         q.put(ip)
 
     def lookup(q, e):
