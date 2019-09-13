@@ -47,8 +47,12 @@ def tor_browser():
 
 
 def main():
-    # regular_browser()
-    tor_browser()
+    t = AsyncSniffer()
+    t.start()
+    regular_browser()
+    # tor_browser()
+    t.stop()
+    wrpcap('scapytest.pcap', t.results)
 
 
 if __name__ == '__main__':
