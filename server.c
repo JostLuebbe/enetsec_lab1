@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <ctype.h>
 
-#define PORT 12000
+#define PORT 5555
 
 int main() {
     int socket_fd, client_sock, c, read_size;

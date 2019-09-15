@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 
-#define PORT 12000
+#define PORT 5555
 
 
 int main() {
