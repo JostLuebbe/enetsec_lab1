@@ -8,7 +8,7 @@ conf.L3socket = L3RawSocket
 def main():
     src_net = "192.168.250."
     dst_ip = '127.0.0.1'
-    dst_port = '5555'
+    dst_port = 5555
     sleep = 0
     # verbose = arguments["--verbose"]
     # very_verbose = arguments["--very-verbose"]
