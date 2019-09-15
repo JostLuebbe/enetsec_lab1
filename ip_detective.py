@@ -8,23 +8,24 @@ from threading import Thread
 import time
 from time import sleep
 
+
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.DEBUG)
 
 
 def multithread_approach():
     q = queue.Queue()
     logger.debug(f'Created queue {q}')
 
-    input_file = Path.cwd() / 'resources' / 'results.txt'
+    input_file = Path.cwd() / 'resources' / 'results2.txt'
 
     with open(input_file, 'r') as f:
         ips = f.read().split('\n')
 
     logger.debug(f'read in list of ips of length {len(ips)}')
 
-    for ip in ips[0:3000]:
+    for ip in ips[0:6000]:
         q.put(ip)
 
     def lookup(q, e):
@@ -51,15 +52,15 @@ def multithread_approach():
     entities = dict()
 
     for i in range(10):
-        logger.debug(f'Starting thread {i}')
+        # logger.debug(f'Starting thread {i}')
         worker = Thread(target=lookup, args=(q, entities))
         worker.setDaemon(True)
         worker.start()
-        logger.debug(f'started thread {i}')
+        # logger.debug(f'started thread {i}')
 
     q.join()
 
-    logger.debug('all ips completed')
+    logger.debug(f'found results for {len(entities)} ips')
 
     output_file = Path.cwd() / 'resources' / 'output.json'
 
@@ -96,12 +97,17 @@ def lookup_ips():
 
 
 def main():
+    # with open('resources/output.json', 'r') as f:
+    #     ip_list = json.load(f)
+    #
+    # print(len(ip_list))
+
     # start_time = time.time()
-    lookup_ips()
+    # lookup_ips()
     # print(time.time() - start_time)
-    # start_time = time.time()
-    # multithread_approach()
-    # print(time.time() - start_time)
+    start_time = time.time()
+    multithread_approach()
+    print(time.time() - start_time)
 
 if __name__ == '__main__':
     main()
