@@ -120,9 +120,6 @@ def analysis():
     # 5493/6000 found results
 
 
-
-
-
     # input_file = Path.cwd() / 'resources' / 'anal_output.json'
     #
     # with open(input_file, 'r') as f:
@@ -141,28 +138,47 @@ def analysis():
     # with open('resources/anal_output.json', 'w') as f:
     #     json.dump(entities, f, indent=4)
 
-    input_file = Path.cwd() / 'resources' / 'anal_output.json'
+    # input_file = Path.cwd() / 'resources' / 'anal_output.json'
+    #
+    # with open(input_file, 'r') as f:
+    #     entities = json.load(f)
+    #
+    # total_ips_found = 0
+    # max_ips_found = 0
+    # max_network = ''
+    # min_ips_found = sys.maxsize
+    #
+    # for network, info in entities.items():
+    #     total_ips_found += info.get('num_ips_found')
+    #     if info.get('num_ips_found') > max_ips_found:
+    #         max_ips_found = info.get('num_ips_found')
+    #         max_network = network
+    #     if info.get('num_ips_found') < min_ips_found:
+    #         min_ips_found = info.get('num_ips_found')
+    #
+    # print(f'average # of IPs found per network: {total_ips_found/len(entities)}')
+    # print(f'max IPs found for a network: {max_ips_found} ({max_network})')
+    # print(f'min IPs found for a network: {min_ips_found}')
 
-    with open(input_file, 'r') as f:
-        entities = json.load(f)
+    pepsi80_file = Path.cwd() / 'pepsi_80.csv'
+    pepsi443_file = Path.cwd() / 'pepsi_443.csv'
 
-    total_ips_found = 0
-    max_ips_found = 0
-    max_network = ''
-    min_ips_found = sys.maxsize
+    with open(pepsi80_file, 'r') as f:
+        pepsi_80 = f.read().split('\n')
 
-    for network, info in entities.items():
-        total_ips_found += info.get('num_ips_found')
-        if info.get('num_ips_found') > max_ips_found:
-            max_ips_found = info.get('num_ips_found')
-            max_network = network
-        if info.get('num_ips_found') < min_ips_found:
-            min_ips_found = info.get('num_ips_found')
+    ips_80 = netaddr.IPSet(pepsi_80)
 
-    print(f'average # of IPs found per network: {total_ips_found/len(entities)}')
-    print(f'max IPs found for a network: {max_ips_found} ({max_network})')
-    print(f'min IPs found for a network: {min_ips_found}')
+    with open(pepsi443_file, 'r') as f:
+        pepsi_443 = f.read().split('\n')
 
+    ips_443 = netaddr.IPSet(pepsi_443)
+
+    print(len(ips_80.intersection(ips_443)))
+    # print(len(ips_443.intersection(ips_80)))
+    print(len(ips_80.difference(ips_443)))
+    print(len(ips_443.difference(ips_80)))
+    print(ips_80.size)
+    print(ips_443.size)
 
 
 def main():
